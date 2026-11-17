@@ -1,0 +1,6 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="JSONPlaceholder API Suite">
+  <test name="API Tests">
+    <packages><package name="com.allahditta.api.tests"/></packages>
+  </test>
+</suite>
