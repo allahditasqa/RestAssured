@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.*;
 
 public class UsersTest extends BaseApiTest {
 
-    @Test(description = "GET /users returns 10 users")
+    @Test(description = "TC_USERS_01 - GET /users returns 10 users including ids 1 and 10")
     public void listUsers() {
         given().spec(req).when().get("/users")
                 .then().statusCode(200)
@@ -16,7 +16,7 @@ public class UsersTest extends BaseApiTest {
                 .body("id", hasItems(1, 10));
     }
 
-    @Test(description = "GET /users/1 matches the JSON schema")
+    @Test(description = "TC_USERS_02 - GET /users/1 matches the user JSON schema")
     public void userSchema() {
         given().spec(req).when().get("/users/1")
                 .then().statusCode(200)
@@ -25,7 +25,7 @@ public class UsersTest extends BaseApiTest {
                 .body("address.geo.lat", notNullValue());
     }
 
-    @Test(description = "GET /users/1/todos returns that user's todos only")
+    @Test(description = "TC_USERS_03 - GET /users/1/todos returns only todos of user 1")
     public void userTodos() {
         given().spec(req).when().get("/users/1/todos")
                 .then().statusCode(200)

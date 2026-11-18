@@ -13,9 +13,16 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Traceability check (documents, master CSV, test code)
+        run: node tools/docs.js check
       - run: mvn -B test
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: surefire-reports
-          path: target/surefire-reports
+          name: test-reports
+          path: |
+            reports/
+            target/surefire-reports/

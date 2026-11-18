@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
  */
 public class PostsCrudTest extends BaseApiTest {
 
-    @Test(description = "GET /posts returns 100 posts")
+    @Test(description = "TC_POSTS_01 - GET /posts returns status 200 and 100 posts")
     public void listPosts() {
         given().spec(req).when().get("/posts")
                 .then().spec(fastResponse)
@@ -23,7 +23,7 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("size()", equalTo(100));
     }
 
-    @Test(description = "GET /posts/1 matches the JSON schema")
+    @Test(description = "TC_POSTS_02 - GET /posts/1 matches the post JSON schema")
     public void getPostMatchesSchema() {
         given().spec(req).when().get("/posts/1")
                 .then().statusCode(200)
@@ -32,7 +32,7 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("userId", equalTo(1));
     }
 
-    @Test(description = "GET /posts?userId=1 filters by user")
+    @Test(description = "TC_POSTS_03 - GET /posts?userId=1 returns 10 posts that all belong to user 1")
     public void filterPostsByUser() {
         given().spec(req).queryParam("userId", 1)
                 .when().get("/posts")
@@ -41,7 +41,7 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("userId", everyItem(equalTo(1)));
     }
 
-    @Test(description = "POST /posts creates a post (201) and echoes the payload")
+    @Test(description = "TC_POSTS_04 - POST /posts creates a post and returns status 201 with the new id 101")
     public void createPost() {
         Map<String, Object> body = Map.of("title", "QA demo", "body", "created by REST Assured", "userId", 7);
         given().spec(req).body(body)
@@ -52,7 +52,7 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("userId", equalTo(7));
     }
 
-    @Test(description = "PUT /posts/1 replaces a post")
+    @Test(description = "TC_POSTS_05 - PUT /posts/1 replaces the post and returns status 200")
     public void updatePost() {
         Map<String, Object> body = Map.of("id", 1, "title", "updated", "body", "updated body", "userId", 1);
         given().spec(req).body(body)
@@ -61,7 +61,7 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("title", equalTo("updated"));
     }
 
-    @Test(description = "PATCH /posts/1 partially updates a post")
+    @Test(description = "TC_POSTS_06 - PATCH /posts/1 changes only the title and returns status 200")
     public void patchPost() {
         given().spec(req).body(Map.of("title", "patched"))
                 .when().patch("/posts/1")
@@ -70,13 +70,13 @@ public class PostsCrudTest extends BaseApiTest {
                 .body("id", equalTo(1));
     }
 
-    @Test(description = "DELETE /posts/1 returns 200")
+    @Test(description = "TC_POSTS_07 - DELETE /posts/1 returns status 200")
     public void deletePost() {
         given().spec(req).when().delete("/posts/1")
                 .then().statusCode(200);
     }
 
-    @Test(description = "GET /posts/1/comments returns nested comments")
+    @Test(description = "TC_POSTS_08 - GET /posts/1/comments returns 5 comments of post 1 with valid emails")
     public void postComments() {
         given().spec(req).when().get("/posts/1/comments")
                 .then().statusCode(200)

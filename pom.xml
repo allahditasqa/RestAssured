@@ -20,6 +20,10 @@
         <groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.5.2</version>
         <configuration>
           <suiteXmlFiles><suiteXmlFile>testng.xml</suiteXmlFile></suiteXmlFiles>
+          <systemPropertyVariables>
+            <report.title>RestAssured</report.title>
+            <report.env>REST Assured 5.5.0 + TestNG 7.10 - https://jsonplaceholder.typicode.com</report.env>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
     </plugins>
